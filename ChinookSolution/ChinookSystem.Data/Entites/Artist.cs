@@ -43,7 +43,7 @@ namespace ChinookSystem.Data.Entites
             }
         }//eop
 
-        public virtual Artist ArtistShown { get; set; } /* Artist does not work when i do Artist Artist */
+        public virtual Artist Artist { get; set; } /* Artist does not work when i do Artist Artist */
     }//eoc
 }//eon
 
