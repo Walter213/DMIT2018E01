@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ChinookSystem.Data.Entites
 {
     [Table("Albums")]
-    class Album
+    public class Album
     {
         [Key]
 
