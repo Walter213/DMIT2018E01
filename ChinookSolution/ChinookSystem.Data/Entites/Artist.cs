@@ -43,7 +43,7 @@ namespace ChinookSystem.Data.Entites
             }
         }//eop
 
-        public virtual ICollection<Album> Albums { get; set; } /* Artist does not work when i do Artist Artist */
+        public virtual ICollection<Album> Albums { get; set; } 
     }//eoc
 }//eon
 

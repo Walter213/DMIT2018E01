@@ -44,7 +44,7 @@ namespace WebApp.SamplePages
             GridViewRow agvrow = AlbumList.Rows[AlbumList.SelectedIndex];
 
             // retrieve the value from a web control located within the gridview cell
-            string albumiD = (agvrow.FindControl("AlbumId") as Label).Text;
+            string albumid = (agvrow.FindControl("AlbumId") as Label).Text;
 
             // error handling will need to be added
 

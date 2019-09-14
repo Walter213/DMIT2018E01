@@ -23,11 +23,11 @@ namespace ChinookSystem.BLL
             }
         }
 
-        public Artist Album_Get(int Albumid)
+        public Album Album_Get(int albumid)
         {
             using (var context = new ChinookContext())
             {
-                return context.Artists.Find(Albumid);
+                return context.Albums.Find(albumid);
             }
         }
 
