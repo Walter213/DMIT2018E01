@@ -78,11 +78,10 @@
                         DynamicMenuItemStyle-ForeColor="#999999"
                         DynamicMenuItemStyle-BackColor="#222222">
                         <Items>
-                            <asp:MenuItem Text="Home" NavigateUrl="~/Default.aspx"></asp:MenuItem>
-                            <asp:MenuItem Text="About" NavigateUrl="~/About.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Home" NavigateUrl="~/Default.aspx"></asp:MenuItem><asp:MenuItem Text="About" NavigateUrl="~/About.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="Contact" NavigateUrl="~/Contact.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="Samples" Value="Samples">
-                                <asp:MenuItem Text="Review CRUD" NavigateUrl="~/SamplesPages/FilterSearchCRUD.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Review CRUD" NavigateUrl="~/SamplePages/FilterSearchCRUD.aspx"></asp:MenuItem>
                             </asp:MenuItem>
                         </Items>
                     </asp:Menu>

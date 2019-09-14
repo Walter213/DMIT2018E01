@@ -42,6 +42,6 @@ namespace ChinookSystem.Data.Entites
             }
         }
 
-        public virtual ICollection<Album> Albums { get; set; }
+        public virtual Artist artist{ get; set; }
     }
 }
