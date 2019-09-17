@@ -54,7 +54,7 @@
         <br />
          <asp:Label ID="label4" runat="server" Text="Artist" MaxLength="160"></asp:Label>
         &nbsp;&nbsp;
-       <asp:DropDownList ID="EditAlbumArtistList" runat="server" ></asp:DropDownList>
+       <asp:DropDownList ID="EditAlbumArtistList" runat="server" DataSourceID="EditArtistListODS" DataTextField="Name" DataValueField="ArtistId"></asp:DropDownList>
         <br />
          <asp:Label ID="label5" runat="server" Text="Year:"></asp:Label>
         &nbsp;&nbsp;
