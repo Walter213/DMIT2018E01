@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="CRUD Review" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FilterSearchCRUD.aspx.cs" Inherits="WebApp.SamplePages.FilterSearchCRUD" %>
+
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
      <h1>Filter Search</h1>
     <blockquote class="alert alert-info">
@@ -7,7 +10,7 @@
         use various form controls. This will review event driven logic reuired for a CRUD process.
     </blockquote>
     <div class="col-md-offset-1">
-      
+        <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
         <asp:Label ID="label1" runat="server" Text="Select an artist:"></asp:Label>
         &nbsp;&nbsp;
         <asp:DropDownList ID="ArtistList" runat="server"></asp:DropDownList>
@@ -69,13 +72,15 @@
         <asp:LinkButton ID="Remove" runat="server" CausesValidation="false">Remove</asp:LinkButton>
     </div>
 
-    <asp:ObjectDataSource ID="AlbumODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="Album_FindByArtist" TypeName="ChinookSystem.BLL.AlbumController">
+    <asp:ObjectDataSource ID="AlbumODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="Album_FindByArtist" 
+        TypeName="ChinookSystem.BLL.AlbumController" OnSelected="CheckForException">
         <SelectParameters>
             <asp:ControlParameter ControlID="ArtistList" PropertyName="SelectedValue" DefaultValue="0" Name="artistid" Type="Int32"></asp:ControlParameter>
         </SelectParameters>
     </asp:ObjectDataSource>
 
-    <asp:ObjectDataSource ID="EditArtistListODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="Artist_List" TypeName="ChinookSystem.BLL.ArtistController">
+    <asp:ObjectDataSource ID="EditArtistListODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="Artist_List" 
+        TypeName="ChinookSystem.BLL.ArtistController" OnSelected="CheckForException">
 
     </asp:ObjectDataSource>
 </asp:Content>
