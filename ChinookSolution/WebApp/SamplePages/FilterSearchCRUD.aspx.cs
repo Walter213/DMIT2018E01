@@ -19,6 +19,10 @@ namespace WebApp.SamplePages
             if (!Page.IsPostBack)
             {
                 BindArtistList();
+
+                // set the max value for the Range Validation control
+                // RangeEditReleaseYear
+                RangeEditReleaseyear.MaximumValue = DateTime.Today.Year.ToString();
             }
         }
 
