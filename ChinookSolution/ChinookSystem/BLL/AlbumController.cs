@@ -16,6 +16,8 @@ namespace ChinookSystem.BLL
     public class AlbumController
     {
         #region Queries
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<Album> Album_List()
         {
             using (var context = new ChinookContext())
@@ -50,6 +52,7 @@ namespace ChinookSystem.BLL
 
         #region Add, Update, Delete
 
+        [DataObjectMethod(DataObjectMethodType.Insert,false)]
         public int Album_Add(Album item)
         {
             using (var context = new ChinookContext())
@@ -61,6 +64,7 @@ namespace ChinookSystem.BLL
             }
         }
 
+        [DataObjectMethod(DataObjectMethodType.Update, false)]
         public int Album_Update(Album item)
         {
             using (var context = new ChinookContext())
@@ -69,6 +73,12 @@ namespace ChinookSystem.BLL
 
                 return context.SaveChanges();
             }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Delete, false)]
+        public int Album_Delete(Album item)
+        {
+            return Album_Delete(item.AlbumId);
         }
 
         public int Album_Delete(int albumid)

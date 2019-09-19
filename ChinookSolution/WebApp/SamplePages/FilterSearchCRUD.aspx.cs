@@ -132,21 +132,24 @@ namespace WebApp.SamplePages
         {
             if (Page.IsValid)
             {
-                int editalbumid = 0;
+                int editAlbumId = 0;
                 string albumid = EditAlbumID.Text;
+                if (string.IsNullOrEmpty(albumid))
+                {
+                    MessageUserControl.ShowInfo("Attention", "Lookup the album before editing");
 
-                if (string.IsNullOrEmpty(albumid)) // if there is no album selected to edit
-                {
-                    MessageUserControl.ShowInfo("Attention", "Look up the album before editing");  // "Title", "Message"
                 }
-                else if (!int.TryParse(albumid, out editalbumid)) // if albumid is not a number
+                else if (!int.TryParse(albumid, out editAlbumId))
                 {
-                    MessageUserControl.ShowInfo("Attention", "Current albumid is invalid");
+                    MessageUserControl.ShowInfo("Attendtion", "Current album id is invalid");
                 }
                 else
                 {
+
+
+
                     Album theAlbum = new Album();
-                    theAlbum.AlbumId = editalbumid;      // include pkey
+                    theAlbum.AlbumId = editAlbumId;
                     theAlbum.Title = EditTitle.Text;
                     theAlbum.ArtistId = int.Parse(EditAlbumArtistList.SelectedValue);
                     theAlbum.ReleaseYear = int.Parse(EditReleaseYear.Text);
@@ -155,21 +158,17 @@ namespace WebApp.SamplePages
                     MessageUserControl.TryRun(() =>
                     {
                         AlbumController sysmgr = new AlbumController();
-
-                        int rowsaffected = sysmgr.Album_Add(theAlbum);
-
+                        int rowsaffected = sysmgr.Album_Update(theAlbum);
                         if (rowsaffected > 0)
                         {
                             AlbumList.DataBind();
-
-                            EditAlbumID.Text = "";
                         }
                         else
                         {
-                            throw new Exception("Album was not found. Repeat lookup and update again.");
+                            throw new Exception("Album was not found. lookup again");
                         }
 
-                    }, "Successful", "Album Edited");
+                    }, "Successfully", "Album Updated");
                 }
             }
         }

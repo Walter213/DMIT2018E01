@@ -3,7 +3,7 @@
 <%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-     <h1>Filter Search</h1>
+    <h1>Filter Search</h1>
     <blockquote class="alert alert-info">
         This page will review filter search techniques. This page will using
         code-behind and ObjectDataSource on multi-record controls. This page will
@@ -87,7 +87,7 @@
         <br />
         <asp:LinkButton ID="Add" runat="server" OnClick="Add_Click" >Add</asp:LinkButton> &nbsp;&nbsp;
         <asp:LinkButton ID="Update" runat="server" OnClick="Update_Click" >Update</asp:LinkButton> &nbsp;&nbsp;
-        <asp:LinkButton ID="Remove" runat="server" CausesValidation="false" OnClick="Remove_Click"       <%-- Causes Validation reminder --%>
+        <asp:LinkButton ID="Remove" runat="server" CausesValidation="false" OnClick="Remove_Click"      
             OnClientClick="return confirm ('Are you sure you want to remove this Album from the collection')">Remove</asp:LinkButton>  <%-- Causes Validation reminder --%>
     </div>
 
