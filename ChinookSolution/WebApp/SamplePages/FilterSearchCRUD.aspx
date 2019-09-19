@@ -33,12 +33,12 @@
         &nbsp;&nbsp;
         <asp:DropDownList ID="ArtistList" runat="server"></asp:DropDownList>
         &nbsp;&nbsp;
-        <asp:LinkButton ID="FetchAlbums" runat="server" CausesValidation="false">Fetch Albums</asp:LinkButton>
+        <asp:LinkButton ID="FetchAlbums" runat="server" CausesValidation="false">Fetch Albums</asp:LinkButton> <%-- Causes Validation reminder --%>
         <br />
         <asp:GridView ID="AlbumList" runat="server" AutoGenerateColumns="false" AllowPaging="True"
             PageSize="5" CssClass="table table-striped" GridLines="Horizontal" BorderStyle="None" DataSourceID="AlbumODS" OnSelectedIndexChanged="AlbumList_SelectedIndexChanged">
             <Columns>
-                <asp:CommandField SelectText="View" ShowSelectButton="True" CausesValidation="false"></asp:CommandField>
+                <asp:CommandField SelectText="View" ShowSelectButton="True" CausesValidation="false"></asp:CommandField> <%-- Causes Validation reminder --%>
                 <asp:TemplateField HeaderText="Album">
                     <ItemTemplate>
                         <asp:Label ID="AlbumTitle" runat="server"
@@ -85,9 +85,10 @@
         &nbsp;&nbsp;
         <asp:TextBox ID="EditReleaseLabel" runat="server" MaxLength="50"></asp:TextBox>
         <br />
-        <asp:LinkButton ID="Add" runat="server" >Add</asp:LinkButton> &nbsp;&nbsp;
-        <asp:LinkButton ID="Update" runat="server" >Update</asp:LinkButton> &nbsp;&nbsp;
-        <asp:LinkButton ID="Remove" runat="server" CausesValidation="false">Remove</asp:LinkButton>
+        <asp:LinkButton ID="Add" runat="server" OnClick="Add_Click" >Add</asp:LinkButton> &nbsp;&nbsp;
+        <asp:LinkButton ID="Update" runat="server" OnClick="Update_Click" >Update</asp:LinkButton> &nbsp;&nbsp;
+        <asp:LinkButton ID="Remove" runat="server" CausesValidation="false" OnClick="Remove_Click"       <%-- Causes Validation reminder --%>
+            OnClientClick="return confirm ('Are you sure you want to remove this Album from the collection')">Remove</asp:LinkButton>  <%-- Causes Validation reminder --%>
     </div>
 
     <asp:ObjectDataSource ID="AlbumODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="Album_FindByArtist" 

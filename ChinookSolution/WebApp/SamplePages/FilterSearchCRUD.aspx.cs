@@ -18,6 +18,7 @@ namespace WebApp.SamplePages
         {
             if (!Page.IsPostBack)
             {
+                ClearControls();
                 BindArtistList();
 
                 // set the max value for the Range Validation control
@@ -83,5 +84,131 @@ namespace WebApp.SamplePages
                 }
             }, "Find Album", "Album found");  // you dont have to add this // strings on this line are success message
         }
+
+        protected void ClearControls()
+        {
+            EditAlbumID.Text = "";
+            EditTitle.Text = "";
+            EditReleaseYear.Text = "";
+            EditReleaseLabel.Text = "";
+            EditAlbumArtistList.SelectedIndex = 0;
+        }
+
+        #region Add, Update, Delete Button
+
+        protected void Add_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                string albumtitle = EditTitle.Text;
+                int albumyear = int.Parse(EditReleaseYear.Text);
+                string albumlabel = EditReleaseLabel.Text == "" ? null : EditReleaseLabel.Text;
+                int albumartist = int.Parse(EditAlbumArtistList.SelectedValue);
+
+                Album theAlbum = new Album();
+                theAlbum.Title = albumtitle;
+                theAlbum.ArtistId = albumartist;
+                theAlbum.ReleaseYear = albumyear;
+                theAlbum.ReleaseLabel = albumlabel;
+
+                MessageUserControl.TryRun(() =>
+                {
+                    AlbumController sysmgr = new AlbumController();
+
+                    int albumid = sysmgr.Album_Add(theAlbum);
+
+                    EditAlbumID.Text = albumid.ToString();
+
+                    if (AlbumList.Rows.Count > 0)
+                    {
+                        AlbumList.DataBind();
+                    }
+
+                }, "Successful", "Album added");
+            }
+        }
+
+        protected void Update_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                int editalbumid = 0;
+                string albumid = EditAlbumID.Text;
+
+                if (string.IsNullOrEmpty(albumid)) // if there is no album selected to edit
+                {
+                    MessageUserControl.ShowInfo("Attention", "Look up the album before editing");  // "Title", "Message"
+                }
+                else if (!int.TryParse(albumid, out editalbumid)) // if albumid is not a number
+                {
+                    MessageUserControl.ShowInfo("Attention", "Current albumid is invalid");
+                }
+                else
+                {
+                    Album theAlbum = new Album();
+                    theAlbum.AlbumId = editalbumid;      // include pkey
+                    theAlbum.Title = EditTitle.Text;
+                    theAlbum.ArtistId = int.Parse(EditAlbumArtistList.SelectedValue);
+                    theAlbum.ReleaseYear = int.Parse(EditReleaseYear.Text);
+                    theAlbum.ReleaseLabel = EditReleaseLabel.Text == "" ? null : EditReleaseLabel.Text;
+
+                    MessageUserControl.TryRun(() =>
+                    {
+                        AlbumController sysmgr = new AlbumController();
+
+                        int rowsaffected = sysmgr.Album_Add(theAlbum);
+
+                        if (rowsaffected > 0)
+                        {
+                            AlbumList.DataBind();
+
+                            EditAlbumID.Text = "";
+                        }
+                        else
+                        {
+                            throw new Exception("Album was not found. Repeat lookup and update again.");
+                        }
+
+                    }, "Successful", "Album Edited");
+                }
+            }
+        }
+
+        protected void Remove_Click(object sender, EventArgs e)
+        {
+            // physical delete
+            int editalbumid = 0;
+            string albumid = EditAlbumID.Text;
+
+            if (string.IsNullOrEmpty(albumid)) // if there is no album selected to edit
+            {
+                MessageUserControl.ShowInfo("Attention", "Look up the album before deleting");  // "Title", "Message"
+            }
+            else if (!int.TryParse(albumid, out editalbumid)) // if albumid is not a number
+            {
+                MessageUserControl.ShowInfo("Attention", "Current albumid is invalid");
+            }
+            else
+            {
+                MessageUserControl.TryRun(() =>
+                {
+                    AlbumController sysmgr = new AlbumController();
+
+                    int rowsaffected = sysmgr.Album_Delete(editalbumid);
+
+                    if (rowsaffected > 0)
+                    {
+                        AlbumList.DataBind();
+                    }
+                    else
+                    {
+                        throw new Exception("Album was not found. Repeat lookup and remove again.");
+                    }
+
+                }, "Successful", "Album Physically Deleted");
+            }
+        }
+
+        #endregion
     }
 }
