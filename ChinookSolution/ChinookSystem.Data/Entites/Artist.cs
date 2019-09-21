@@ -1,63 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-#region Addition Namespaces
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-#endregion
-
 namespace ChinookSystem.Data.Entites
 {
-    [Table("Artists")]
-    public class Artist
-    {
-        /*  POCOs stands for Plain Ordinary Common Object
-            DTOs (Data Transfer Object) : That has POCOs and structure
-            Entities: definition to map a database entity (table): that contrain native basic datatype elements  */
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-        [Key]       /* Compund Key [Key, Column(Order = n)] then their is [Key, DatabaseGenerated(DatabaseGeneratedOption.3optionsareavaliable)]  */
+    public partial class Artist
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Artist()
+        {
+            Albums = new HashSet<Album>();
+        }
 
         public int ArtistId { get; set; }
 
-        private string _Name;
+        [StringLength(120)]
+        public string Name { get; set; }
 
-        public string Name  /* for reminder, this is incase it is null */
-        {
-            get
-            {
-                return _Name;
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    _Name = null;
-                }
-                else
-                {
-                    _Name = value;
-                }//eof
-            }
-        }//eop
-
-        public virtual ICollection<Album> Albums { get; set; } 
-    }//eoc
-}//eon
-
-/* Tracks, MediaTypes, Genres */
-
-/* LINQPad 5 poop
- 
-    from x in Albums
-    orderby x.Artist.Name
-    select new
-    {
-        ArtistName = x.ArtistName
-        Title = x.Title
-        Year = x.ReleaseYear
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Album> Albums { get; set; }
     }
-
-*/
+}

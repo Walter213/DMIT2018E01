@@ -1,40 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-#region Addition Namespaces
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-#endregion
-
 namespace ChinookSystem.Data.Entites
 {
-    [Table("MediaTypes")]
-    class MediaType
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class MediaType
     {
-        [Key]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MediaType()
+        {
+            Tracks = new HashSet<Track>();
+        }
+
         public int MediaTypeId { get; set; }
 
-        private string _Name { get; set; }
-        public string Name
-        {
-            get
-            {
-                return _Name;
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    _Name = null;
-                }
-                else
-                {
-                    _Name = value;
-                }
-            }
-        }
+        [StringLength(120)]
+        public string Name { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }

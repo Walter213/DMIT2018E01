@@ -1,43 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-#region Addition Namespaces
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-#endregion
-
 namespace ChinookSystem.Data.Entites
 {
-    [Table("Tracks")]
-    class Track
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class Track
     {
-        [Key]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Track()
+        {
+            InvoiceLines = new HashSet<InvoiceLine>();
+            PlaylistTracks = new HashSet<PlaylistTrack>();
+        }
 
         public int TrackId { get; set; }
 
+        [Required]
+        [StringLength(200)]
         public string Name { get; set; }
 
-        private string _Name { get; set; }
-        public string ReleaseLabel  /* for reminder, this is incase it is null */
-        {
-            get
-            {
-                return _Name;
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    _Name = null;
-                }
-                else
-                {
-                    _Name = value;
-                }
-            }
-        }
+        public int? AlbumId { get; set; }
+
+        public int MediaTypeId { get; set; }
+
+        public int? GenreId { get; set; }
+
+        [StringLength(220)]
+        public string Composer { get; set; }
+
+        public int Milliseconds { get; set; }
+
+        public int? Bytes { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal UnitPrice { get; set; }
+
+        public virtual Album Album { get; set; }
+
+        public virtual Genre Genre { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InvoiceLine> InvoiceLines { get; set; }
+
+        public virtual MediaType MediaType { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
     }
 }

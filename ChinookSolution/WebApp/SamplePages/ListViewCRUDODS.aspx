@@ -13,7 +13,7 @@
     <br />
 
     <asp:ListView ID="AlbumList" runat="server" DataSourceID="AlbumListODS" 
-        InsertItemPosition="LastItem" DataKeyNames="AlbumId">                   <!-- DataKeyName is required to remove -->
+        InsertItemPosition="LastItem" DataKeyNames="AlbumId">                   <%-- DataKeyName is required to remove --%>
         <AlternatingItemTemplate>
             <tr style="background-color: #FFF8DC;">
                 <td>
