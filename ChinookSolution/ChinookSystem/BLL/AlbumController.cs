@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ChinookSystem.DAL;
 using ChinookSystem.Data.Entites;
 using System.ComponentModel;
+using DMIT2018Common.UserControls;
 #endregion
 
 namespace ChinookSystem.BLL
@@ -15,6 +16,12 @@ namespace ChinookSystem.BLL
     [DataObject]
     public class AlbumController
     {
+        #region Class Variable
+
+        List<string> reasons = new List<string>(); // can make private
+
+        #endregion
+
         #region Queries
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]
@@ -57,10 +64,17 @@ namespace ChinookSystem.BLL
         {
             using (var context = new ChinookContext())
             {
-                context.Albums.Add(item);  // Staging 
-                context.SaveChanges();     // Committed
+                if (CheckReleaseYear(item))
+                {
+                    context.Albums.Add(item);  // Staging 
+                    context.SaveChanges();     // Committed
 
-                return item.AlbumId;       // returns new id value
+                    return item.AlbumId;       // returns new id value
+                }
+                else
+                {
+                    throw new BusinessRuleException("Validation Error", reasons);
+                }
             }
         }
 
@@ -69,9 +83,17 @@ namespace ChinookSystem.BLL
         {
             using (var context = new ChinookContext())
             {
-                context.Entry(item).State = System.Data.Entity.EntityState.Modified;
 
-                return context.SaveChanges();
+                if (CheckReleaseYear(item))
+                {
+                    context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+
+                    return context.SaveChanges();
+                }
+                else
+                {
+                    throw new BusinessRuleException("Validation Error", reasons);
+                }
             }
         }
 
@@ -98,6 +120,36 @@ namespace ChinookSystem.BLL
                     return context.SaveChanges();
                 }
             }
+        }
+
+        #endregion
+
+        #region SupportMethods
+
+        private bool CheckReleaseYear(Album item)
+        {
+            bool isValid = true;
+            int Releaseyear;
+
+            if (string.IsNullOrEmpty(item.ReleaseYear.ToString()))
+            {
+                isValid = false;
+                reasons.Add("Release Year is required");
+            }
+
+            else if (int.TryParse(item.ReleaseYear.ToString(), out Releaseyear))
+            {
+                isValid = false;
+                reasons.Add("Release Year is not a number");
+            }
+
+            else if (Releaseyear < 1950 || Releaseyear > DateTime.Today.Year)
+            {
+                isValid = false;
+                reasons.Add(string.Format("Album Release Year of {0} invalid. Year must be between 1950 and today", Releaseyear));
+            }
+
+            return isValid;
         }
 
         #endregion

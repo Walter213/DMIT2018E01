@@ -22,6 +22,9 @@ namespace ChinookSystem.Data.Entites
 
         public int ArtistId { get; set; }
 
+        // The range validation and annotation can check a field for a range of values
+            // the Minimum and Maximum values MUST BE CONSTANTS
+
         public int ReleaseYear { get; set; }
 
         [StringLength(50)]
