@@ -101,12 +101,32 @@ results.Dump();
 
 
 
+
+
 // C# program
 // Define other methods and classes here
 void Main()
 {
 	var results = from x in Albums
 	where x.Artist.Name.Equals("Deep Purple")
+	orderby x.ReleaseYear, x.Title
+	select new AlbumsOfArtist
+	{
+		Title = x.Title,
+		ArtistName = x.Artist.Name,
+		RYear = x.ReleaseYear,
+		RLabel = x.ReleaseLabel
+	};
+	results.Dump();
+}
+
+// or this is possible
+
+void Main()
+{
+	string artistname = "Deep Purple";
+	var results = from x in Albums
+	where x.Artist.Name.Contains(artistname)
 	orderby x.ReleaseYear, x.Title
 	select new AlbumsOfArtist
 	{

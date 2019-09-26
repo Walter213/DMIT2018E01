@@ -9,6 +9,7 @@ using ChinookSystem.DAL;
 using ChinookSystem.Data.Entites;
 using System.ComponentModel;
 using DMIT2018Common.UserControls;
+using ChinookSystem.Data.POCOs;
 #endregion
 
 namespace ChinookSystem.BLL
@@ -51,6 +52,27 @@ namespace ChinookSystem.BLL
                     where x.ArtistId == artistid
                     select x; /* select a row */
 
+                return results.ToList();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<AlbumsOfArtist> Album_AlbumsOfArtist(string artistname)
+        {
+            using (var context = new ChinookContext())
+            {
+                // unlike linqpad which is linked to sql
+                // within our application it is Linq to Entities
+                var results = from x in context.Albums
+                              where x.Artist.Name.Equals(artistname)
+                              orderby x.ReleaseYear, x.Title
+                              select new AlbumsOfArtist
+                              {
+                                  Title = x.Title,
+                                  ArtistName = x.Artist.Name,
+                                  RYear = x.ReleaseYear,
+                                  RLabel = x.ReleaseLabel
+                              };
                 return results.ToList();
             }
         }
