@@ -120,8 +120,8 @@ void Main()
 
 public class AlbumsOfArtist
 {
-	public string Title {get; set}
-	public string ArtistName {get; set}
-	public int RYear {get; set}
-	public string RLabel {get; set}
+	public string Title {get; set;}
+	public string ArtistName {get; set;}
+	public int RYear {get; set;}
+	public string RLabel {get; set;}
 }
