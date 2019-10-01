@@ -220,12 +220,17 @@ select new
 
 // create a list of all albums containing the album title and artist along
 // with all the tracks (song name, genre, length) of that album
+// aggregates are executed against a collection of records
+//	These aggregates are	.Count(), .Sum(x => x.field), .Min(x => x.field), .Max(x => x.field), .Average(x => x.field)
 
 from x in Albums
+where x.Tracks.Count() > 25
 select new
 {
 	Title = x.Title,
 	Artist = x.Artist.Name,
+	trackcount = x.Tracks.Count(),
+	playtime = x.Tracks.Sum(z => z.Milliseconds),
 	Tracks = from y in x.Tracks
 		// where x.AlbumID == y.AlbumID
 		select new
