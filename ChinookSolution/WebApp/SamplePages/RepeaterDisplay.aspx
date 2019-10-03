@@ -20,9 +20,9 @@
                 # of Tracks: <%# Item.TrackCount %>
                 Play Time: <%# Item.PlayTime %>
             </p>
-            <asp:GridView ID="TrackList" runat="server"         <%-- Dont use ObjectDataID!!!!!, this is the biggest mistake --%>
+            <asp:GridView ID="TrackList" runat="server"         
                 DataSource="<%# Item.AlbumTracks %>"
-                CssClass="table" GridLines="Horizontal" BorderStyle="None">
+                CssClass="table" GridLines="Horizontal" BorderStyle="None"> <%-- Dont use ObjectDataID!!!!!, this is the biggest mistake --%>
             </asp:GridView>
         </ItemTemplate>
         <FooterTemplate>
