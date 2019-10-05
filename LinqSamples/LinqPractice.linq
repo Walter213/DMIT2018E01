@@ -240,3 +240,160 @@ select new
 			Length = y.Milliseconds
 		}
 }
+
+
+// another day another lesson
+
+// group record collection a single field on the record
+// the selected grouping field is referred to as the group key
+from x in Tracks
+group x by new x.GenreId
+
+// group record collection using multiple field on the record
+//  the multiple field become a group key instance
+//  referring to a property in the group key instance is by Key.Property
+from x in Tracks
+group x by new {x.GenreId, x.MediaTypeId}
+
+//place the grouping of the large data collection into a temporary data
+// collection ANY further reporting on the groups with the temporary data
+//   collection will use the temporary data collection name as its data source
+
+// report on each group
+from x in Tracks
+group x by x.GenreId into gGenre
+select (gGenre)
+
+// details on each group
+from x in Tracks
+group x by x.GenreId into gGenre
+select new
+{
+	groupid = gGenre.Key,
+	tracks = gGenre.ToList()
+}
+
+// selected fields from each group
+from x in Tracks
+group x by x.GenreId into gGenre
+select new
+{
+	groupid = gGenre.Key,
+	tracks = from x in gGenre
+			select new
+			{
+				trackid = x.TrackId,
+				song = x.Album.Artist.Name,
+				length = x.Milliseconds/1000000.0
+			}
+}
+
+// refer to a specific key property
+from x in Tracks
+group x by new {x.GenreId, x.MediaTypeId} into gTracks
+select new
+{
+	genre = gTracks.Key.GenreId,
+	media = gTracks.Key.MediaTypeId,
+	trackcount = gTracks.Count()
+}
+
+// you can also group by class
+from x in Tracks
+group x by x.Genre into gTracks
+select (gTracks)
+
+from x in Tracks
+group x by x.Genre into gTracks
+select new
+{
+	genre = gTracks.Key.GenreId,
+	name = gTracks.Key.Name,
+	trackcount = gTracks.Count()
+}
+
+from x in Tracks
+group x by x.Album into gTracks
+select new
+{
+	name = gTracks.Key.Title,
+	artist = gTracks.Key.Artist.Name,
+	trackcount = gTracks.Count()
+}
+
+// create a list of albums by releaseyear
+//  by showing the year, number of albums in that 
+// year, album title, count of
+// tracks for each album.
+
+from x in Albums
+group x by x.ReleaseYear into CTracks
+select new
+{
+	ReleaseYear = CTracks.Key,
+	AlbumCount = CTracks.Count(),
+	Title = from y in CTracks
+			select new
+			{
+				Title = y.Title,
+				TrackCount = (from t in y.Tracks
+								select t).Count()
+			}
+}
+
+// orderby the previous report by the number of albums
+//  per year descending
+
+from x in Albums
+group x by x.ReleaseYear into CTracks
+orderby CTracks.Count() descending
+select new
+{
+	ReleaseYear = CTracks.Key,
+	AlbumCount = CTracks.Count(),
+	Title = from y in CTracks
+			select new
+			{
+				Title = y.Title,
+				TrackCount = (from t in y.Tracks
+								select t).Count()
+			}
+}
+
+// What was the most productive year
+//  order within count by year ascending
+
+from x in Albums
+group x by x.ReleaseYear into CTracks
+orderby CTracks.Count() descending, CTracks.Key
+select new
+{
+	ReleaseYear = CTracks.Key,
+	AlbumCount = CTracks.Count(),
+	Title = from y in CTracks
+			select new
+			{
+				Title = y.Title,
+				TrackCount = (from t in y.Tracks
+								select t).Count()
+			}
+}
+
+// report only albums from 1990 and later
+
+from x in Albums where ReleaseYear >= 1990
+group x by x.ReleaseYear into CTracks
+// where CTracks.Key>= 1990 or this is possible
+orderby CTracks.Count() descending, CTracks.Key
+select new
+{
+	ReleaseYear = CTracks.Key,
+	AlbumCount = CTracks.Count(),
+	Title = from y in CTracks
+			select new
+			{
+				Title = y.Title,
+				TrackCount = (from t in y.Tracks
+								select t).Count()
+			}
+}
