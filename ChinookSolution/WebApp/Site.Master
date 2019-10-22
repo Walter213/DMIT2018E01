@@ -85,6 +85,7 @@
                                 <asp:MenuItem Text="DMIT2018 CRUD ODS" NavigateUrl="~/SamplePages/ListViewCRUDODS.aspx"></asp:MenuItem>
                                 <asp:MenuItem Text="LinqPad to WebApp" NavigateUrl="~/SamplePages/DisplayArtistAlbums.aspx"></asp:MenuItem>
                                 <asp:MenuItem Text="Repeater Display" NavigateUrl="~/SamplePages/RepeaterDisplay.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="OLTP" NavigateUrl="~/SamplePages/ManagePlaylist.aspx"></asp:MenuItem>
                             </asp:MenuItem>
                         </Items>
                     </asp:Menu>

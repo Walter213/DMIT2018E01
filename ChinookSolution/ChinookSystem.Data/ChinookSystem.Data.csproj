@@ -64,7 +64,10 @@
     <Compile Include="Entites\sysdiagram.cs" />
     <Compile Include="Entites\Track.cs" />
     <Compile Include="POCOs\AlbumsOfArtist.cs" />
+    <Compile Include="POCOs\SelectionList.cs" />
+    <Compile Include="POCOs\TrackList.cs" />
     <Compile Include="POCOs\TrackPOCO.cs" />
+    <Compile Include="POCOs\UserPlaylistTrack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -103,6 +103,22 @@ namespace ChinookSystem.BLL
         //    }
         //}
 
+        //[DataObjectMethod(DataObjectMethodType.Select, false)]
+        //public List<SelectionList> List_AlbumNames()
+        //{
+        //    using (var context = new ChinookContext())
+        //    {
+        //        var results = from x in context.Albums
+        //                      orderby x.Title
+        //                      select new SelectionList
+        //                      {
+        //                          IDValueField = x.AlbumId,
+        //                          DisplayText = x.Title
+        //                      };
+        //        return results.ToList();
+        //    }
+        //}
+
         #endregion
 
         #region Add, Update, Delete
