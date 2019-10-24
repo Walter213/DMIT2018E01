@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Chinook.Data.POCOs;
 
 #region Additonal Namespaces
 using ChinookSystem.BLL;
@@ -92,8 +93,28 @@ namespace Jan2018DemoWebsite.SamplePages
 
         protected void PlayListFetch_Click(object sender, EventArgs e)
         {
-            //code to go here
- 
+            if (string.IsNullOrEmpty(PlaylistName.Text))
+            {
+                MessageUserControl.ShowInfo("Required Data", "PlayList Name is required to fetch a play list");
+            }
+            else
+            {
+                string playlistname = PlaylistName.Text;
+                // until we do security, we will use a hard coded username
+                string username = "HansenB";
+
+                // do a standard query lookup to your controller
+                //  use MessageUserControl for error handling
+                MessageUserControl.TryRun(() =>
+                {
+                    PlaylistTracksController sysmgr = new PlaylistTracksController();
+
+                    List<UserPlaylistTrack> datainfo = sysmgr.List_TracksForPlaylist(playlistname, username);
+
+                    PlayList.DataSource = datainfo;
+                    PlayList.DataBind();
+                }, "Playlist Tracks", "See current tracks on playlist below");
+            }
         }
 
         protected void MoveDown_Click(object sender, EventArgs e)
