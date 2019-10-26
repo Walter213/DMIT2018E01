@@ -247,7 +247,7 @@ select new
 // group record collection a single field on the record
 // the selected grouping field is referred to as the group key
 from x in Tracks
-group x by new x.GenreId
+group x by new {x.GenreId}
 
 // group record collection using multiple field on the record
 //  the multiple field become a group key instance
