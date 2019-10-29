@@ -142,12 +142,46 @@ namespace Jan2018DemoWebsite.SamplePages
  
         }
 
-        protected void TracksSelectionList_ItemCommand(object sender, 
-            ListViewCommandEventArgs e)
+        protected void TracksSelectionList_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
-            //code to go here
-            
-        }
+            //do we have the playlist name
+            if (string.IsNullOrEmpty(PlaylistName.Text))
+            {
+                MessageUserControl.ShowInfo("Required Data", "PlayList Name Is Required To Add A Track");
+            }
+            else
+            {
+                // collect the required data for the event
+                string playlistname = PlaylistName.Text;
 
+                // the username will come from the form security
+                //  so until security is added we will use HansenB
+                string username = "HansenB";
+
+                // obtain the trackid from the ListView
+                //  the trackid will be in the CommandArg property of the 
+                //  ListViewCommandEventArgs e instance
+                // the CommandArgument in e is returned as an object
+                //  case it to string, then you can .Parse the string
+                int trackid = int.Parse(e.CommandArgument.ToString());
+
+                // using the obtained data, issue your call to the BLL method
+                // this work will be done within TryRun()
+                MessageUserControl.TryRun(() => 
+                {
+                    PlaylistTracksController sysmgr = new PlaylistTracksController();
+
+                    // There is ONLY one call to add the data to the database
+                    sysmgr.Add_TrackToPLaylist(playlistname, username, trackid);
+
+                    // refresh the playlist which is a READ
+                    List<UserPlaylistTrack> datainfo = sysmgr.List_TracksForPlaylist(playlistname, username);
+
+                    PlayList.DataSource = datainfo;
+                    PlayList.DataBind();
+
+                },"Adding A Track", "Track Has Been Added To The PlayList");
+            }
+        }
     }
 }
