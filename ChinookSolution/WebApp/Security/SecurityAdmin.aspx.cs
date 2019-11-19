@@ -83,7 +83,5 @@ namespace WebApp.Security
             EmployeeListForRoles.DataBind();
             RoleList.DataBind();
         }
-
-
     }
 }

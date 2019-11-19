@@ -38,21 +38,19 @@ namespace WebApp.Security
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ApplicationUser> ListUsers()
         {
-            return UserManager.Users.Where(x => x.EmployeeId.HasValue ||
-                                x.CustomerId.HasValue).OrderBy(x => x.UserName).ToList();
+            return UserManager.Users.Where(x => x.EmployeeID.HasValue ||
+                                x.CustomerID.HasValue).OrderBy(x => x.UserName).ToList();
         }
 
         [DataObjectMethod(DataObjectMethodType.Insert)]
         public void AddUser(ApplicationUser user)
         {
-            if (user.EmployeeId == 0 )
+            if (user.EmployeeID == 0 )
             {
                 throw new Exception("Pick a customer or employee.");
             }
-            if (user.EmployeeId == 0)
-            {
-                user.EmployeeId = null;
-            }
+
+            user.CustomerID = null;
 
             IdentityResult result = UserManager.Create(user, ConfigurationManager.AppSettings["newUserPassword"]);
             CheckResult(result,"user", "add");
@@ -67,9 +65,9 @@ namespace WebApp.Security
             else if (existing.UserName == ConfigurationManager.AppSettings["adminUserName"] && existing.UserName != user.UserName)
                 throw new Exception("You are not allowed to modify the website administrator's user name");
             // Change certain parts of the found user
-            if (user.EmployeeId == 0)
+            if (user.EmployeeID == 0)
             {
-                existing.EmployeeId = null;
+                existing.EmployeeID = null;
             }
  
             existing.Email = user.Email;
@@ -147,7 +145,7 @@ namespace WebApp.Security
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ApplicationUser> ListUserEmployees()
         {
-            return UserManager.Users.Where(x => x.EmployeeId.HasValue).OrderBy(x => x.UserName).ToList();
+            return UserManager.Users.Where(x => x.EmployeeID.HasValue).OrderBy(x => x.UserName).ToList();
         }
 
         public void AddUserRole(string userid, string roleid)
@@ -200,7 +198,7 @@ namespace WebApp.Security
                 var manager = request.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var appUser = manager.Users.SingleOrDefault(x => x.UserName == userName);
                 if (appUser != null)
-                    id = appUser.EmployeeId;
+                    id = appUser.EmployeeID;
             }
             return id;
         }
@@ -214,7 +212,7 @@ namespace WebApp.Security
                 var manager = request.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var appUser = manager.Users.SingleOrDefault(x => x.UserName == userName);
                 if (appUser != null)
-                    id = appUser.CustomerId;
+                    id = appUser.CustomerID;
             }
             return id;
         }

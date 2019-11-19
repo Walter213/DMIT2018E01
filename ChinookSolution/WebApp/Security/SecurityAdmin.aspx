@@ -29,7 +29,7 @@
                             DataSourceID="EmployeeListODS" 
                             DataTextField="DisplayText" 
                             DataValueField="IDValueField"
-                            selectedvalue='<%# Item.EmployeeId.HasValue?Item.EmployeeId:0 %>'
+                            selectedvalue='<%# Item.EmployeeID.HasValue?Item.EmployeeID:0 %>'
                             >
                         <asp:ListItem Value="0">employee ...</asp:ListItem>
                          </asp:DropDownList>
@@ -83,7 +83,7 @@
                             DataSourceID="EmployeeListODS" 
                             DataTextField="DisplayText" 
                             DataValueField="IDValueField"
-                            selectedvalue='<%# Item.EmployeeId.HasValue?Item.EmployeeId:0 %>'
+                            selectedvalue='<%# Item.EmployeeID.HasValue?Item.EmployeeID:0 %>'
                             >
                         <asp:ListItem Value="0">employee ...</asp:ListItem>
                          </asp:DropDownList>
