@@ -64,8 +64,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ChinookSystem.Data\ChinookSystem.Data.csproj">
       <Project>{70c829ea-67c3-41dc-bece-dd13dbf37dd0}</Project>
-      <Name>ChinookSystem.Data</Name>
-    </ProjectReference>
+      <Name>ChinookSystem.Data</Name> </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
