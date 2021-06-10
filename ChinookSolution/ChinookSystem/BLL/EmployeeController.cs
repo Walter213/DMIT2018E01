@@ -18,6 +18,7 @@ namespace ChinookSystem.BLL
     [DataObject]
     public class EmployeeController
     {
+    
         public List<string> Employees_GetTitles()
         {
             using (var context = new ChinookContext())
