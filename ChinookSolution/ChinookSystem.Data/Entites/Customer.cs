@@ -13,7 +13,6 @@ namespace ChinookSystem.Data.Entites
         {
             Invoices = new HashSet<Invoice>();
         }
-
         public int CustomerId { get; set; }
 
         [Required]
