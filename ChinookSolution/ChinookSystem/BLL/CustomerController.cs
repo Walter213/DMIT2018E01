@@ -12,7 +12,6 @@ using ChinookSystem.Data.Entites;
 using Chinook.Data.POCOs;
 using ChinookSystem.Data.POCOs;
 #endregion
-
 namespace ChinookSystem.BLL
 {
     public class CustomerController
